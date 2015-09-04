@@ -1,10 +1,7 @@
 var pull = require('pull-stream');
-var toPullStream = require('stream-to-pull-stream');
 var pullPush = require('pull-pushable');
-//var observe = require('pull-spawn').observe;
 var tee = require('pull-tee');
-
-var JSONStream = require('JSONStream');
+var observe = require('pull-spawn').observe;
 
 var pages = pullPush();
 
@@ -24,25 +21,22 @@ var api = pull.asyncMap(function(page, cb) {
     ];
     setTimeout(function() {
         console.log('response');
-        cb(null, pull.values(JSON.stringify(response).split('')));
-    }, 1000);
+        cb(null, pull.values([response]));
+    }, 100);
 });
 
 function iteratePages() {
-   return pull(
-        toPullStream(JSONStream.parse(['nextPage'])),
-        pull.collect(function(err, tokens) {
-            if (err) throw err;
-            console.log('tokens', tokens);
-            process.nextTick(function() {
-            if (tokens.length) {
-                pages.push(tokens[0]);
-            } else {
-                pages.end();
-            }
-            });
-        })
-    );
+   return pull.drain(function(response) {
+        var token = response.nextPage;
+        console.log('token', token);
+        if (token) {
+            setTimeout(function(){
+                pages.push(token);
+            }, 2000);
+        } else {
+            pages.end();
+        }
+    });
 }
 
 pull(
@@ -52,10 +46,10 @@ pull(
     pull.map(function(responseStream) {
         return pull(
             responseStream,
-            tee(iteratePages()),
-            toPullStream(JSONStream.parse(['items', true, 'name']))
+            observe(iteratePages())
         );
     }),
-    pull.take(2),
+    pull.flatten(),
+    pull.take(1),
     pull.log()
 );

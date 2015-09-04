@@ -21,6 +21,7 @@
     "pull-pushable": "^1.1.4",
     "pull-spawn": "0.0.7",
     "pull-stream": "^2.27.0",
+    "pull-tee": "^2.0.0",
     "pull-unwind": "0.0.3",
     "querystring": "^0.2.0",
     "stream-to-pull-stream": "^1.6.5",
