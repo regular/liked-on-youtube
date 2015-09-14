@@ -29,7 +29,7 @@ module.exports = function(api_key, opts) {
             pull.asyncMap(function(id, cb) {
                 // id = playlistID of the 'likes' pseudo-playlist
                 debug('likes playlist id: %s', id);
-                cb(null, 
+                cb(null,
                     request({
                         endpoint: 'playlistItems',
                         part: 'snippet',

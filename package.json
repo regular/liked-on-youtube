@@ -1,14 +1,15 @@
 {
   "name": "liked-on-youtube",
   "version": "1.0.0",
-  "description": "get an object stream of all the videos a certain user liked on youtube",
+  "description": "get a meta-data pull-stream of all videos a user liked on youtube (browser & node)",
   "main": "index.js",
   "scripts": {
-    "test": "node test.js|tap-spec && browserify test.js|testling|tap-spec"
+    "test": "node test.js|tap-spec"
   },
   "keywords": [
     "youtube",
     "like",
+    "pull-stream",
     "stream",
     "video"
   ],
@@ -23,9 +24,7 @@
   },
   "devDependencies": {
     "bl": "^1.0.0",
-    "browserify": "^11.0.1",
     "tap-spec": "^4.1.0",
-    "tape": "^4.2.0",
-    "testling": "^1.7.1"
+    "tape": "^4.2.0"
   }
 }
