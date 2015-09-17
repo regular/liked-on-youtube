@@ -10,10 +10,9 @@ var base_url = "https://www.googleapis.com/youtube/v3/";
 module.exports = function(api_key, opts) {
     opts = opts || {};
     var makeRequest = opts.request || hyperquest;
-    var request = paginated(function(query, pageToken) {
-        var endpoint = query.endpoint; delete query.endpoint;
-        return makeRequest(base_url + endpoint + '?' + querystring.stringify(
-            extend({key: api_key}, query, pageToken ? {pageToken: pageToken} : {})
+    var request = paginated(function(o, pageToken) {
+        return makeRequest(base_url + o.endpoint + '?' + querystring.stringify(
+            extend({key: api_key}, o.query, pageToken ? {pageToken: pageToken} : {})
         ));
     });
 
@@ -21,8 +20,10 @@ module.exports = function(api_key, opts) {
         return pull(
             request({
                 endpoint: 'channels',
-                part: 'contentDetails',
-                id: id
+                query: {
+                    part: 'contentDetails',
+                    id: id
+                }
             },
                 [['items', 0, 'contentDetails', 'relatedPlaylists', 'likes']]
             ),
@@ -32,9 +33,11 @@ module.exports = function(api_key, opts) {
                 cb(null,
                     request({
                         endpoint: 'playlistItems',
-                        part: 'snippet',
-                        playlistId: id,
-                        maxResults: 50
+                        query: {
+                            part: 'snippet',
+                            playlistId: id,
+                            maxResults: 50
+                        }
                     },
                     [
                         ['items', true], 
