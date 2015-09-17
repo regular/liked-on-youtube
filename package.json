@@ -18,7 +18,8 @@
   "dependencies": {
     "debug": "^2.2.0",
     "hyperquest": "^1.2.0",
-    "pull-stream": "^2.28.1",
+    "pull-paginated-api-request": "^1.0.0",
+    "pull-stream": "^2.28.4",
     "querystring": "^0.2.0",
     "xtend": "^4.0.0"
   },
@@ -26,5 +27,13 @@
     "bl": "^1.0.0",
     "tap-spec": "^4.1.0",
     "tape": "^4.2.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/regular/liked-on-youtube.git"
+  },
+  "bugs": {
+    "url": "https://github.com/regular/liked-on-youtube/issues"
+  },
+  "homepage": "https://github.com/regular/liked-on-youtube#readme"
 }
